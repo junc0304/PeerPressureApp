@@ -5,7 +5,7 @@ class User {
         this.email      = email;
     }
 
-    static createNewModel(json) {
+    static jsonToUser(json) {
         return new User( json.firstName,
                          json.lastName,
                          json.email );

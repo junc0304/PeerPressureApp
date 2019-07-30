@@ -6,18 +6,6 @@ class UserController {
         this.userModelDataController = userModelDataController;
     }
 
-    deleteUser(userModel) {
-        var result;
-
-        try {
-            result = this.userModelDataController.delete(new UserModel.createNewModel(userModel));
-        } catch(err) {
-            throw new HttpErrorHandler(400, err);
-        }
-        
-        return result;
-    }
-
     getUserById(id) {
         var result;
         
@@ -42,11 +30,23 @@ class UserController {
         return result;
     }
 
-    update(userModel) {
+    deleteUser(userModel) {
         var result;
 
         try {
-            result = this.userModelDataController.update(new User.createNewModel(userModel));
+            result = this.userModelDataController.delete(new UserModel.fromJSON(userModel));
+        } catch(err) {
+            throw new HttpErrorHandler(400, err);
+        }
+        
+        return result;
+    }
+
+    update(newDetails) {
+        var result;
+
+        try {
+            result = this.userModelDataController.update(new User.fromJSON(newDetails));
         } catch(err) {
             throw new HttpErrorHandler(400, err);
         }
@@ -58,7 +58,7 @@ class UserController {
         var result;
 
         try {
-            result = this.userModelDataController.insert(new User.createNewModel(userModel));
+            result = this.userModelDataController.insert(userModel);
         } catch(err) {
             throw new HttpErrorHandler(400, err);
         }

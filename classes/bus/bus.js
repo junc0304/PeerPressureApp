@@ -7,12 +7,12 @@ class Bus {
     send(commandString, handler, postHandler) {
         this.eventEmitter.register(commandString, () => {
             setImmediate((command) => { // 3
-                postHandler.handle();
+                postHandler.onHandle();
             });
 
             // process.nextTick(); 2 
 
-            handler.handle(); // 1
+            handler.onHandle(); // 1
         });
 
         this.eventEmitter.emit(commandString);
