@@ -1,3 +1,5 @@
+const APP_CONSTANTS = require('../../../util/constants/constants');
+
 class UserBus extends Bus {
     constructor() {
         super();
@@ -9,6 +11,4 @@ class UserBus extends Bus {
 
         super.send(commandString, handler, postHandler);
     }
-
-
 }

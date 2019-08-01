@@ -19,7 +19,12 @@ const userController = require('./controller/userController');
 const userModelDataController = require('./controller/user/userModelDataController');
 
 // Mappers
-const userMapper = require('./controller/user/mappers/user/userMapper');
+const userMapper = require('./mappers/user/userMapper');
+
+// Command
+const addUserCommand = require('./command/user/addUserCommand/addUserCommand');
+const addUserCommandHandler = require('./command/user/addUserCommand/addUserCommandHandler');
+const addUserPostCommandHandler = require('./command/user/addUserCommand/addUserPostCommand');
 
 const container = createContainer({ injectionMode: InjectionMode.CLASSIC });
 

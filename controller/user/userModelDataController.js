@@ -1,10 +1,12 @@
 const APP_CONSTANTS = require('../../util/constants/constants');
+const AddUserCommand = require('../../command/user/addUserCommand/addUserCommand');
 
 class UserModelDataController {
-    constructor(userMapper, userBus, keyGenerator){
+    constructor(userMapper, userBus, keyGenerator, queryService){
         this.userMapper = userMapper;
         this.bus = userBus;
         this.keyGenerator = keyGenerator;
+        this.queryService = queryService;
     }
 
     /** 
@@ -39,8 +41,7 @@ class UserModelDataController {
         userModel.PKeyId = keyGenerator.generateKey();
         this.userMapper.mapToEntity(userModel, newEntity);
 
-        var addUserCommand = new AddUserCommand(newEntity);
-        this.bus.send(APP_CONSTANTS.ADD_USER_COMMAND, addUserCommand);
+        this.bus.send( APP_CONSTANTS.ADD_USER_COMMAND, new AddUserCommand(newEntity) );
 
         this.userMapper.mapToApiModel(userModel, newEntity);
     }
@@ -49,8 +50,11 @@ class UserModelDataController {
      * Update a user with UserModel given.
      * @param {UserModel} userModel 
      */
-    update(userModel) {
+    update(modelToUpdate) {
+        var entity = queryService.findById(modelToUpdate.id);
+        this.userMapper.mapToEntity(modelToUpdate, entity);
 
+        this.bus.send( APP_CONSTANTS.UPDATE_USER_COMMAND, new UpdateUserCommand(entity) );
     }
 
     /**
